@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'task.apps.TaskConfig',
     'question.apps.QuestionConfig',
     'product.apps.ProductConfig',
+    'interface.apps.InterfaceConfig',
 ]
 
 MIDDLEWARE = [
