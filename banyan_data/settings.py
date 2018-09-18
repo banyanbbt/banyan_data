@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'datasets.apps.DatasetsConfig',
     'user.apps.UserConfig',
     'task.apps.TaskConfig',
+    'question.apps.QuestionConfig',
 ]
 
 MIDDLEWARE = [
