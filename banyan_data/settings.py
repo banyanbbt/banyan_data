@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'task.apps.TaskConfig',
     'question.apps.QuestionConfig',
+    'product.apps.ProductConfig',
 ]
 
 MIDDLEWARE = [
