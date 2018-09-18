@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'interface.apps.InterfaceConfig',
     'customer.apps.CustomerConfig',
     'cooperation.apps.CooperationConfig',
+    'billing.apps.BillingConfig',
+    'captcha',
 ]
 
 MIDDLEWARE = [
