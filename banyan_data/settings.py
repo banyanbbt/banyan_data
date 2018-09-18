@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'interface.apps.InterfaceConfig',
     'customer.apps.CustomerConfig',
+    'cooperation.apps.CooperationConfig',
 ]
 
 MIDDLEWARE = [
