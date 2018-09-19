@@ -1,0 +1,12 @@
+Django==2.0.7
+PyMySQL==0.8.1
+jsonfield==2.0.2
+Pillow==5.2.0
+celery==4.2.1
+redis==2.10.6
+openpyxl==2.5.5
+requests==2.19.1
+django-simple-captcha==0.5.9
+pycrypto==2.6.1
+Fabric3==1.14.post1
+
