@@ -1,0 +1,322 @@
+{% extends 'layouts/auth.html' %} {% load static %}
+{% block title %}认证-{% endblock title %}
+{% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation" style="background: #3b3faa;">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li>
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="login-register" class="padding-top-80 main-section">
+    <div class="login-wrapper">
+        <div class="login-inner">
+        {% if code %}
+            <span class="success-title">企业帐号注册提交成功</span>
+            <p class="success-intro">我们的商务人员将尽快与您联系并开通账户，感谢申请！ </p>
+            <a href="/" class=" success-btn">查看首页</a>
+        {% else %}
+            <div class="top-title">
+                <div class="col-sm-6 col-xs-6 {% if flag %}active{% endif %}">登录</div>
+                <div class="col-sm-6 col-xs-6 {% if not flag %}active{% endif %}">注册</div>
+            </div>
+            <div class="form-login-register">
+                <form id="loginForm" method="post" action="/login/" class="form-horizontal {% if flag %}active{% endif %}" role="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="email" class="col-sm-2 control-label">邮箱：</label>
+                        <div class="col-sm-9">
+                            {{ login_form.email }}
+                            {% if log_error.email %}<label id="email-error" class="error" for="email">{{ log_error.email.0 }}</label>{% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label">密码：</label>
+                        <div class="col-sm-9">
+                            {{ login_form.password }}
+                            {% if log_error.password %}<label id="password-error" class="error" for="password">{{ log_error.password.0 }}</label>{% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-9">
+                            <button type="submit" class="btn btn-default">登录</button>
+                        </div>
+                    </div>
+                </form>
+                <form id="registerForm" method="post" action="/register/" class="form-horizontal {% if not flag %}active{% endif %}" role="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-9">
+                            <div class="col-sm-6 col-xs-6 account-class">
+                                <input type="radio" name="regist_account" id="regist_personal_account" value="regist_personal_account" {% if not ea %}checked="checked"{% endif %}>
+                                <label for="regist_personal_account">个人账户</label>
+                            </div>
+                            <div class="col-sm-6 col-xs-6 account-class">
+                                <input type="radio" name="regist_account" id="regist_company_account" value="regist_company_account" {% if ea %}checked="checked"{% endif %}>
+                                <label for="regist_company_account">企业账户</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 个人注册 表单 -->
+                    <div class="personal">
+                        <div class="form-group">
+                            <label for="email2" class="col-sm-2 control-label">邮箱：</label>
+                            <div class="col-sm-9">
+                                {{ reg_form.email }}
+                                {% if reg_error.email %}<label id="email2-error" class="error" for="email2">{{ reg_error.email.0 }}</label>{% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password2" class="col-sm-2 control-label">密码：</label>
+                            <div class="col-sm-9">
+                                {{ reg_form.password }}
+                                {% if reg_error.password %}<label id="password2-error" class="error" for="password2">{{ reg_error.password.0 }}</label>{% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password3" class="col-sm-2 control-label" style="white-space: nowrap">确认密码：</label>
+                            <div class="col-sm-9">
+                                {{ reg_form.password_confirm }}
+                                {% if reg_error.password_confirm %}<label id="password3-error" class="error" for="password3">{{ reg_error.password_confirm.0 }}</label>{% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-9">
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="read_check" onclick="isCheck()" type="checkbox" checked="checked"> 阅读并接受
+                                    </label>
+                                    <a data-toggle="modal" data-target="#agreement"> 《榕树用户协议》</a>
+                                </div>
+
+                                <div class="modal fade" id="agreement" tabindex="-1" role="dialog" aria-labelledby="agreementLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="agreementLabel">榕树用户协议</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>更新日期：2018年01月10日版本 </p>
+                                                <p>生效日期：2018年01月10日生效</p>
+                                                <br>
+
+                                                <h4>首部及导言</h4>
+
+                                                <p>感谢您对榕树网络的关注以及对本页面、相关页面的友好访问。</p>
+                                                <p>您所访问的页面由榕树网络基金会（以下简称“我们”）开发，特此发布本声明如下，请你务必审慎阅读、充分理解各条款内容。</p>
+                                                <br>
+
+                                                <h4>我们搜集的信息 </h4>
+
+                                                <p>- 会员登记</p>
+                                                <p>- 网站注册</p>
+                                                <p>- 调查问卷</p>
+                                                <p>- 售后跟踪和回访</p>
+                                                <p>- 就有关产品或服务征求意见和建议</p>
+                                                <p>- 举办活动并征集参加者</p>
+                                                <p>您有权拒绝提供个人信息。但如果您拒绝提供某些个人信息，您将可能无法使用我们提供的产品、服务，或者可能对您使用产品或服务造成一定的影响。
+                                                </p>
+                                                <br>
+
+                                                <h4>信息安全 </h4>
+
+                                                <p>我们努力为用户的信息安全提供保障，以防止信息的丢失、不当使用、未经授权访问或披露。</p>
+                                                <p>我们将在合理的安全水平内使用各种安全保护措施以保障信息的安全。例如，我们会使用加密技术（例如，SSL）、匿名化处理等手段来保护你的个人信息。
+                                                </p>
+                                                <p>我们建立专门的管理制度、流程和组织以保障信息的安全。例如，我们严格限制访问信息的人员范围，要求他们遵守保密义务，并进行审计。
+                                                </p>
+                                                <p>若发生个人信息泄露等安全事件，我们会启动应急预案，阻止安全事件扩大，并以推送通知、公告等形式告知你。
+                                                </p>
+                                                <br>
+
+                                                <h4>个人信息使用和披露
+                                                </h4>
+
+                                                <p>(1) 您同意，我们可以通过以下方式对个人信息进行使用和披露（包含对于个人信息的存储和处理）：
+                                                    <br> (a) 我们（含分支机构）自行使用；
+                                                    <br> (b) 我们向关联公司披露并由其使用；
+                                                    <br> (c) 在各自的正常业务范围内，我们向各自受让人或继承人、法律及财务顾问、外部服务供应商、承包商/代理人/经纪人、信用资料或备咨机构、收账代理人披露并由其使用。</p>
+                                                <p>(2) 我们可能定期或不定期向您发送有关产品和服务的信息以及相关活动信息或营销信息，您同意接收上述信息。</p>
+                                                <p>(3) 在下列情况下或为下列目的之一，我们可能将个人信息提供给前述相关实体以外的第三方：
+                                                    <br> - 经过您的特别授权；
+                                                    <br> - 满足相关法律规定或满足政府机关（包括司法机关）的强制性要求；
+                                                    <br> - 执行适用的服务条款（包括调查可能存在的违规情况）；
+                                                    <br> - 查找、预防或处理欺诈、安全或技术方面的问题；
+                                                    <br> - 在法律要求或允许的范围内，保护用户或公众的权利、财产或安全免遭损害；
+                                                    <br> - 或在紧急情况下，向您的紧急联系人披露并由其使用。
+                                                    <br>
+                                                </p>
+                                                <p>(4) 个人信息的传输、存储方式包含电子方式，相应信息接受和/或使用方及其服务器可能位于中国境内或者境外。</p>
+                                                <p>(5) 我们将严格保护您的个人信息安全。我们将采用适当制度、安全技术和程序等措施来保护您的个人信息不被未经授权的访问、使用或泄漏。我们亦将促使本法律声明所述各接收和使用方尽力保护和不予泄露您的个人信息。</p>
+                                                <p>(6) 您同意免除上述个人信息的接收和/或使用方在按照本法律声明所述情形下进行信息披露和使用而导致的或可能导致的所有索赔、责任和损失，除非上述索赔、责任和损失直接因该等接收和/或使用方的故意行为或重大过失造成。</p>
+                                                <p>(7) 我们保留您的个人信息的时间，将不会超过为该等信息的预定使用目的而必需的时间，或任何合同或相关法律所规定的时间。</p>
+                                                <br>
+
+                                                <h4>你的权利
+                                                </h4>
+                                                <p>在你使用我们的服务期间，为了你可以更加便捷地访问、更正、删除你的个人信息，同时保障你撤回对个人信息使用的同意及注销帐号的权利。设置了反馈渠道，你的意见将会得到及时的处理。
+                                                </p>
+                                                <br>
+
+                                                <h4>适用法律
+                                                </h4>
+                                                <p>本声明适用中华人民共和国法律。
+                                                </p>
+                                                <br>
+
+                                                <h4>联系方式
+                                                </h4>
+                                                <p>如果您需要查询、修改或更正您的个人信息，或对个人信息保护问题有任何疑问或投诉，您可以通过发送电子件service@banyanbbt.org 联系我们。
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" id="modal-subscribe" data-dismiss="modal">确认</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 企业注册 表单 -->
+                    <div class="company" style="display: none;">
+                        <div class="form-group">
+                            <label for="company_name" class="col-sm-2 control-label" style="white-space: nowrap">公司名称:</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="company_name" id="company_name" class="form-control" placeholder="公司名称" disabled="disabled" required >
+                                {% if customer_error.company_name %}<label id="company_name_error" class="error" for="company_name">{{ customer_error.company_name.0 }}</label>{% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="company_people" class="col-sm-2 control-label" style="white-space: nowrap">联系人:</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="company_people" id="company_people" class="form-control" placeholder="联系人姓名" disabled="disabled" required >
+                                {% if customer_error.company_people %}<label id="company_people_error" class="error" for="company_people">{{ customer_error.company_people.0 }}</label>{% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="company_tele" class="col-sm-2 control-label" style="white-space: nowrap">联系电话:</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="company_tele" id="company_tele" class="form-control" placeholder="联系电话" disabled="disabled" required >
+                                {% if customer_error.company_tele %}<label id="company_tele_error" class="error" for="company_tele">{{ customer_error.company_tele.0 }}</label>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-9 ">
+                            <button id="reg_btn" type="submit" class="btn btn-default">注册</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %} {% block bottom_javascript %}
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/messages_zh.js' %}"></script>
+<script>
+    $().ready(function () {
+        $("#loginForm").validate();
+        $("#registerForm").validate();
+    });
+
+    // 注册时，切换个人与企业
+    $('input[name="regist_account"]').change(function () {
+        if ($(this).val() == 'regist_company_account') {
+            $('.company').show();
+            $('.company input').removeAttr("disabled");
+            $('#reg_btn').text('申请注册')
+            $('.personal').hide();
+            $('.personal input').attr("disabled","disabled");
+        } else {
+            $('.company').hide();
+            $('.company input').attr("disabled","disabled");
+            $('#reg_btn').text('注册')
+            $('.personal').show();
+            $('.personal input').removeAttr("disabled");
+        }
+    });
+
+    // 企业注册失败
+    (function loginFail() {
+        if ($('input[name="regist_account"]:checked').val() == 'regist_company_account') {
+            $('.company').show();
+            $('.company input').removeAttr("disabled");
+            $('#reg_btn').text('申请注册')
+            $('.personal').hide();
+            $('.personal input').attr("disabled","disabled");
+        }
+    })();
+
+    function isCheck() {
+        var status = $("#read_check").prop("checked");
+        if (status){
+            $("#reg_btn").attr("disabled",false);
+        }else {
+            $("#reg_btn").attr("disabled",true);
+        }
+    }
+</script>
+{% endblock %}
