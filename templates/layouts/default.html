@@ -1,0 +1,112 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <title>{% block title %}{% endblock title %}榕树网络-数据治理平台</title>
+  <meta charset="utf-8">
+  <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+  <meta name="description" content="榕树数据治理平台提供专业的数据标注、制作、采集服务，全方位支持文本、语音、图像、视频等各类型数据的处理，速度快、成本低、质量高。 有数据治理需求者，可在线提交数据清洗、标注等需求，我们帮助需求方形成解决方案并发布在榕树数据治理平台，帮助需求方更高质量、高速度地完成数据清洗、标注需求。">
+  <meta name="keywords" content="大数据服务，区块链，汽车，金融，旅游，去中心，一站式，数据配置，数据挖掘，数据调用, 榕树网络">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/one.style.css">
+  <link rel="shortcut icon" href="/static/image/favicon.ico">
+  <link rel="apple-touch-icon" href="/static/image/favicon.ico">
+  <link rel="stylesheet" href="/static/css/fileinput-rtl.min.css">
+  <link rel="stylesheet" href="/static/css/fileinput.min.css">
+  <link rel="stylesheet" href="/static/css/swiper.min.css">
+  <link rel="stylesheet" href="/static/css/aos.css">
+  <link rel="stylesheet" href="/static/css/custom.css">
+  <link rel="stylesheet" href="/static/css/select2.min.css">
+</head>
+
+<body id="body" data-spy="scroll" data-target=".one-page-header" class="demo-lightbox-gallery">
+
+  {% block content %} {% endblock content %} {% block footer %}
+  <footer id="footer">
+    <div class="footer-line1">
+      <div class="footer-line1-contain1">
+        <p>还等什么呢？</p>
+
+        {% if request.session.user_id %}
+          <a href="javascript:void(0);">已加入</a>
+        {% else %}
+          <a href="/auth/?action=1/">申请加入</a>
+        {% endif %}
+
+      </div>
+      <div class="footer-line1-contain2">
+        <p>现在立即注册加入榕树，免费领取 8 个 BBN ！</p>
+        <p>登陆后，请至 控制台-个人中心 查看</p>
+      </div>
+
+    </div>
+    <div class="footer-line2 container">
+      <div class="footer-line2-contain1">
+        <img src="/static/newimg/footer/banyanlogo.png" alt="" class="footerlogo">
+        <!-- <div class="footercontact">
+          <img src="/static/newimg/footer/weibo.png" alt="">
+          <img src="/static/newimg/footer/wechat.png" alt="">
+          <img src="/static/newimg/footer/twitter.png" alt="">
+        </div>   -->
+      </div>
+      <div class="footer-line2-contain2">
+        <ul>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tasks/">领取任务</a></li>
+          <li><a href="/cooperation/">数据合作</a></li>
+          <li><a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a></li>
+        </ul>
+      </div>
+      <!-- <div class="footercontact">
+        <img src="/static/newimg/footer/weibo.png" alt="">
+        <img src="/static/newimg/footer/wechat.png" alt="">
+        <img src="/static/newimg/footer/twitter.png" alt="">
+      </div> -->
+      <div class="contact-icon">
+        <a href="javascript:void(0);" class="wechat">
+          <img src="/static/newimg/footer/contacts/wechat.jpeg" alt="">
+          <p>
+            <img src="/static/newimg/footer/contacts/qrcode_258.jpg" alt="">
+          </p>
+        </a>
+        <a href="https://weibo.com/u/6523794287" target="_blank" title="微博">
+          <img src="/static/newimg/footer/contacts/weibo.png" alt="">
+        </a>
+        <a href="https://twitter.com/banyan_network" target="_blank" title="twitter">
+          <img src="/static/newimg/footer/contacts/twitter.png" alt="">
+        </a>
+        <a href="https://www.reddit.com/r/BanyanNetwork" target="_blank" title="reddit">
+          <img src="/static/newimg/footer/contacts/reddit-icon.png" alt="">
+        </a>
+        <a href="https://t.me/BBNGlobalFans" target="_blank" title="telegram">
+          <img src="/static/newimg/footer/contacts/telegram.jpg" alt="">
+        </a>
+        <a href="https://medium.com/BanyanNetwork" target="_blank" title="medium">
+          <img src="/static/newimg/footer/contacts/medium.png" alt="">
+        </a>
+        <a href="https://github.com/banyanbbt" target="_blank" title="github">
+          <img src="/static/newimg/footer/contacts/github.png" alt="">
+        </a>
+      </div>
+      <div class="footer-info">
+        <p>Copyright © 2017-2018 Banyan Network Foundation Ltd. All Rights Reserved.</p>
+      </div>
+
+
+    </div>
+  </footer>
+  {% endblock footer %}
+
+  <script type="application/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/one.app.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/swiper.min.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/aos.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+
+  {% block bottom_javascript %} {% endblock %}
+</body>
+
+</html>
