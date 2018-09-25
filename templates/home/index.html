@@ -1,0 +1,331 @@
+{% extends 'layouts/default.html' %}
+{% load static %}
+{% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active">
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li>
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="home-wrapper" class="main-section">
+    <div id="home">
+        <div class="banner-container row">
+            <div class="container">
+                <div class="left col-md-6">
+                    <h1 class="title" aos="fade-up" aos-easing="ease" aos-delay="100">榕树数据</h1>
+                    <p class="slogn" aos="fade-up" aos-easing="ease" aos-delay="150">数据，融合无限可能</p>
+                    <a class="more" href="/vwimport_sharan/" aos="fade-up" aos-easing="ease" aos-delay="200">了解最新活动 ></a>
+                </div>
+                <div class="right col-md-6" aos="fade-up" aos-easing="ease" aos-delay="300">
+                    <img class="preserve3d" src="/static/newimg/top/right.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="what-data">
+            <h3 class="title-hr">什么是榕树数据</h3>
+            <hr>
+            <p class="sub-title">一站式数据清洗、治理、服务平台</p>
+            <div class="contents row">
+                <div class="col-sm-6 col-xs-6 left left1" aos="fade-right" aos-easing="ease" aos-delay="100">
+                    <img src="/static/newimg/what/zhili3.png" alt="" height="330px">
+                </div>
+                <div class="col-sm-6 col-xs-6 right right1" aos="fade-left" aos-easing="ease" aos-delay="100">
+                    <h2 class="">数据治理</h2>
+                    <hr>
+                    <p>
+                            数据清洗需求方将待处理数据发布到平台上，由社区参与治理
+                    </p>
+                </div>
+                <div class="col-sm-6 col-xs-6 right right2" aos="fade-right" aos-easing="ease" aos-delay="200">
+                    <h2 class="">数据服务</h2>
+                    <hr>
+                    <p>
+                        数据来源涵盖国内几十家主流数据源，支持链接所有常见关系型、非关系型或特异数据源，接口实时稳定可靠
+                    </p>
+                </div>
+                <div class="col-sm-6 col-xs-6 left left2" aos="fade-left" aos-easing="ease" aos-delay="200">
+                    <img src="/static/newimg/what/fuwu3.png" alt="" height="330px">
+                </div>
+                <div class="col-sm-6 col-xs-6 left left3" aos="fade-right" aos-easing="ease" aos-delay="300">
+                    <img src="/static/newimg/what/chaoshi1.png" alt="" height="330px">
+                </div>
+                <div class="col-sm-6 col-xs-6 right right3" aos="fade-left" aos-easing="ease" aos-delay="300">
+                    <h2 class="">数据超市</h2>
+                    <hr>
+                    <p>
+                        汇集了大量的数据精品，数据类别众多，可用性强
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="how-data">
+            <h3 class="title-hr">行业方案</h3>
+            <hr>
+            <p class="sub-title">提供行业大数据标准化产品和服务，全面满足您的业务场景和数据需求 </p>
+            <div class="row contents" aos="fade-up" aos-easing="ease" aos-delay="200">
+                <div class="col-sm-6 col-md-3 outer">
+                    <div class="item">
+                        <img src="/static/newimg/how/car.jpg" alt="" height="300px" width="300px">
+                        <a href="/vwimport_sharan/">汽车<br>金融</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 outer">
+                    <div class="item">
+                        <img src="/static/newimg/how/tra.jpg" alt="" height="300px" width="300px">
+                        <a href="/mego/">境外<br>旅游</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 outer">
+                    <div class="item">
+                        <img src="/static/newimg/how/money.jpg" alt="" height="300px" width="300px">
+                        <a href="/finance/">金融<br>征信</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 outer">
+                    <div class="item">
+                        <img src="/static/newimg/how/lux.jpg" alt="" height="300px" width="300px">
+                        <a href="/luxury/">奢侈<br>品牌</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tips">
+                <span class="glyphicon glyphicon-arrow-up"></span>
+                <p>点击了解详情</p>
+            </div>
+        </div>
+        <div class="why-data">
+            <h3 class="title-hr">为什么选择榕树数据</h3>
+            <hr>
+            <p class="sub-title">融合前沿数据，引领智慧科技</p>
+            <div class="row contents" aos="fade-up" aos-easing="ease" aos-delay="200">
+                <div class="col-sm-6 col-md-3 outer">
+                    <div class="item">
+                        <img src="/static/newimg/why/1.png" alt="" height="120px" width="120px">
+                        <div class="explain">
+                            <h4>数据清洗</h4>
+                            <h3>速度快</h3>
+                            <p>全面、高效、专业的数据</p>
+                            <p>清洗、采集、标注众包管理平台</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 outer">
+                    <div class="item">
+                        <img src="/static/newimg/why/2.png" alt="" height="120px" width="120px">
+                        <div class="explain">
+                            <h4>数据接口</h4>
+                            <h3>覆盖广</h3>
+                            <p>数据来源涵盖国内几十家</p>
+                            <p>主流数据源</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 outer">
+                    <div class="item">
+                        <img src="/static/newimg/why/3.png" alt="" height="120px" width="120px">
+                        <div class="explain">
+                            <h4>数据服务</h4>
+                            <h3>全程保障</h3>
+                            <p>专业数据解决方案专家全程服务</p>
+                            <p>让您的智能营销尽善尽美</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 outer">
+                    <div class="item">
+                        <img src="/static/newimg/why/4.png" alt="" height="120px" width="120px">
+                        <div class="explain">
+                            <h4>数据超市</h4>
+                            <h3>高质量</h3>
+                            <p>提供资源共享且</p>
+                            <p>风险隔离的高质量数据</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="which-data">
+            <h3 class="title-hr">榕树有哪些合作伙伴</h3>
+            <hr>
+            <p class="sub-title">联手行业各大引领者，构建多方安全的数据融合服务生态</p>
+            <div class="contents">
+                <div class="line" aos="fade-up" aos-easing="ease" aos-delay="200">
+                    <img src="/static/newimg/cooper/hpb.png" alt="" height="60px">
+                    <img src="/static/newimg/cooper/loopring.png" class="looper" alt="" height="60px">
+                    <img src="/static/newimg/cooper/share.png" alt="" height="60px">
+                </div>
+                <div class="line" aos="fade-up" aos-easing="ease" aos-delay="400">
+                    <img src="/static/newimg/cooper/sen.png" alt="" height="60px">
+                    <img src="/static/newimg/cooper/sopay.png" alt="" height="60px">
+                </div>
+            </div>
+        </div>
+        <div id="contact-us" class="call-us">
+            <h3 class="title-hr">联系榕树</h3>
+            <hr>
+            <p class="sub-title">留下您的信息与需求，客服人员将竭诚为您服务</p>
+            <div class="contents row">
+                <div class="col-sm-6 tree">
+                    <img src="/static/newimg/contact/banyan.png" alt=""  width="600px">
+                </div>
+                <div class="col-sm-6 inner">
+                    <form class="" id="feedback-form" method="POST" action="/feedback/">
+                        {% csrf_token %}
+                        <fieldset class="row">
+                            <div class="item col-sm-6">
+                                <input id="contact_name" class="form-control" name="contact_name" minlength="2" type="text" placeholder="姓名" required>
+                            </div>
+                            <div class="item col-sm-6">
+                                <input id="contact_mobile" class="form-control" name="contact_mobile" minlength="6" type="text" placeholder="电话" required>
+                            </div>
+                            <div class="item col-sm-6">
+                                <input id="contact_email" class="form-control" name="contact_email" type="text" placeholder="邮箱" minlength="6" required>
+                            </div>
+                            <div class="item col-sm-6">
+                                <input id="company_name" class="form-control" name="company_name" minlength="2" type="text" placeholder="公司" required>
+                            </div>
+                            <div class="item col-sm-12" style="height:auto;">
+                                <textarea id="feedback_content" name="feedback_content" class="form-control" rows="6" placeholder="需求" required></textarea>
+                            </div>
+                            <div class="col-sm-12 btn-div">
+                                <input class="btn btn-primary" type="submit" value="提交需求">
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block bottom_javascript %}
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script>
+    $().ready(function () {　　
+        $("#feedback-form").validate({
+
+            messages: {　　
+                contact_name: {　　　　
+                    required: "姓名是必填的哦",
+                    minlength: "请告诉我们正确的姓名",
+                    　　　　　　　　　　　　　　　　
+                },
+                　　contact_mobile: {　　　　
+                    required: "电话是必填的哦",
+                    minlength: "请告诉我们有效的手机号",
+                    　　　　
+                },
+                contact_email: {　　　　
+                    required: "邮箱是必填的哦",
+                    minlength: "请告诉我们有效的邮箱",
+                    　　　　
+                },
+                company_name: {　　　　
+                    required: "公司名是必填的哦",
+                    minlength: "请告诉我们有效的公司名",
+                    　　　　　　　　
+                },
+                feedback_content: {　　　　
+                    required: "需求是必填的哦",
+                    minlength: "请告诉我们真实的需求",
+                    　　　　
+                },
+            },
+            submitHandler: function (form) {
+                $.ajax({　　
+                    url: "/feedback/",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        contact_name: $.trim($("#contact_name").val()),
+                        contact_mobile: $.trim($("#contact_mobile").val()),
+                        contact_email: $.trim($("#contact_email").val()),
+                        company_name: $.trim($("#company_name").val()),
+                        feedback_content: $.trim($("#feedback_content").val()),
+                    },
+                    success: function (msg) {
+                        $("#contact_name").val('');
+                        $("#contact_mobile").val('');
+                        $("#contact_email").val('');
+                        $("#company_name").val('');
+                        $("#feedback_content").val('');
+                        alert('需求反馈已收到，我们将尽快与你取得联系');
+                        return false;
+                    },
+                    error: function (response) {
+                        var error_message = (response.status == 403) ? response.responseText :
+                            "程序处理异常，请稍后重试";
+                        alert(error_message);
+                        return false;
+                    }
+                });
+            },
+            invalidHandler: function (form, validator) {
+                return false;
+            }
+        });
+
+    });
+</script>
+{% endblock %}
