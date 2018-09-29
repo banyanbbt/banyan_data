@@ -1,0 +1,382 @@
+{% extends 'layouts/default.html' %} {% block title %}数据合作-{% endblock title %} {% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation">
+  <div class="">
+    <div class="menu-container page-scroll">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+      <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+    </div>
+
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <div class="menu-container">
+        <ul class="log-reg-block visible-md-block visible-lg-block">
+          {% if request.session.user_id %}
+          <li class="cd-log_reg">
+            <a class="cd-signup" href="/logout/">退出</a>
+          </li>
+          {% else %}
+          <li class="cd-log_reg">
+            <a class="cd-signin" href="/auth/">登录</a>
+          </li>
+          <li class="cd-log_reg">
+            <a class="cd-signup" href="/auth/?action=1/">加入</a>
+          </li>
+          {% endif %}
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="/">首页</a>
+          </li>
+          <li>
+            <a href="/tasks/">领取任务</a>
+          </li>
+          <li class="active">
+            <a href="/cooperation/">数据合作</a>
+          </li>
+          <li>
+            <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+          </li>
+          <li>
+            <a href="/task/">控制台</a>
+          </li>
+          {% if request.session.user_id %}
+          <li class="cd-log_reg visible-xs-block visible-sm-block">
+            <a class="cd-signup" href="/logout/">退出</a>
+          </li>
+          {% else %}
+          <li class="cd-log_reg visible-xs-block visible-sm-block">
+            <a class="cd-signin" href="/auth/">登录</a>
+          </li>
+          <li class="cd-log_reg visible-xs-block visible-sm-block">
+            <a class="cd-signup" href="/auth/?action=1/">加入</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section id="cooperation-wrapper" class="main-section">
+  <div id="cooperation">
+    <div class="task-banner">
+      <div class="container" aos="fade-up" aos-easing="ease" aos-delay="200">
+        <h1>数据合作 找榕树</h1>
+        <p>榕树数据期待与您携手共同开启数字化新时代</p>
+      </div>
+    </div>
+    <div class="container">
+      <h3 class="title title-hr">数据接口服务</h3>
+      <hr>
+      <div class="row">
+        <div class="col-md-12 col-xs-12 interface-left interface"aos="fade-right" aos-easing="ease" aos-delay="200">
+
+          <img src="/static/newimg/cooperation/interface-left-logo.png" alt="">
+          <div class="interface-content">
+            <p>个体数据接口</p>
+            <ul>
+              <li>个体信息核验</li>
+              <li>个体资产/征信</li>
+              <li>个体行为标签</li>
+              <li>...</li>
+            </ul>
+
+          </div>
+        </div>
+        <div class="col-md-12 col-xs-12 interface-right interface" aos="fade-left" aos-easing="ease" aos-delay="200">
+          <img src="/static/newimg/cooperation/interface-right-logo.png" alt="">
+          <div class="interface-content">
+            <p>企业数据接口</p>
+            <ul style="margin-left:-40px;">
+              <li>企业工商信息</li>
+              <li>企业风险信息</li>
+              <li>企业经营信息</li>
+              <li>...</li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+      <div class="cooperation-button">
+        <a href="/interfaces/" class="btn btn-default"> 查看所有 </a>
+      </div>
+
+      <h3 class="title title-hr">数据超市</h3>
+      <hr>
+      <div class="row" aos="fade-up" aos-easing="ease" aos-delay="200">
+        <div class="col-sm-6 col-md-3  outer">
+          <div class="market-item">
+            <img src="/static/newimg/cooperation/market1.png" alt="" width="120px">
+            <p>P2P网贷平台名单</p>
+            <div class="market-item-content">
+              <p>平台名称、注册公司</p>
+              <p>注册地、注册金额</p>
+              <p>平台运营情况等</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3 outer">
+          <div class="market-item">
+            <img src="/static/newimg/cooperation/market2.png" alt="" width="120px">
+            <p>企业工商数据集</p>
+            <div class="market-item-content">
+              <p>企业所属的工商名称全称</p>
+              <p>企业统一社会信用代码</p>
+              <p>APP名称</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3 outer">
+          <div class="market-item">
+            <img src="/static/newimg/cooperation/market3.png" alt="" width="120px">
+            <p>汽车标签数据集</p>
+            <div class="market-item-content">
+              <p>车品牌、车系</p>
+              <p>车型、车版本</p>
+              <p>车价格等</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3 outer">
+          <div class="market-item">
+            <img src="/static/newimg/cooperation/market4.png" alt="" width="120px">
+            <p>汽车经销商数据集</p>
+            <div class="market-item-content">
+              <p>汽车经销商公司名称</p>
+              <p>所在省份</p>
+              <p>城市等</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cooperation-button">
+        <a class="btn btn-default" disabled> 即将开放 </a>
+      </div>
+      <h3 class="title title-hr">数据优势</h3>
+      <hr>
+      <div class="row" aos="fade-up" aos-easing="ease" aos-delay="200">
+
+        <div class="col-sm-12 col-md-4 outer">
+          <div class="item">
+            <img src="/static/newimg/cooperation/icon1.png" alt="" height="120px" width="120px">
+            <div class="explain">
+
+              <h4>数据覆盖主流数据源</h4>
+              <p>数据来源涵盖国内几十家主流数据源，支持连接所有常见关系型、非关系型或特异 数据源，接口实时稳定可靠</p>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 outer">
+          <div class="item">
+            <img src="/static/newimg/cooperation/icon2.png" alt="" height="120px" width="120px">
+            <div class="explain">
+              <h4>数据来源合法合规</h4>
+
+              <p>提供资源共享且风险隔离的数据安全框架，授权、脱敏、来源评估、风险分类、身份控制、权限管理、审核备案全方位数据使用保障</p>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 outer">
+          <div class="item">
+            <img src="/static/newimg/cooperation/icon3.png" alt="" height="120px" width="120px">
+            <div class="explain">
+              <h4>数据系统易接易用</h4>
+
+              <p>集成主流框架，易用的图形界面，现有的语言和工具，无缝扩展到多源数据环境中，数据应用方无需系统改造，支持网页版接入</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="title title-hr">成为数据合作伙伴</h3>
+      <hr>
+      <div class="row become-cooperation">
+        <div class="col-sm-12 ">
+          <p aos="zoom-in" aos-easing="ease" aos-delay="400">
+            <span>榕树网络</span>是国内唯一处理过多个<span>超级数据源、数百亿级数据量，</span>开发多个成熟商用数据产品的团队。核心团队来自于<span>Oracle，银联，平安 ，阿里</span>等中美两国大数据行业数据、 模型、算法等领域专家。拥有跨数据源建模及相互校验、同态加密、SMC、Box Computing等多项<span>核心技术</span>。团队服务过近百家<span>500强</span>客户，拥有一批知名品牌标杆案例，覆盖大数据营销、大数据风控产品等。我们愿与<span>人工智能企业、区块链团队</span>和有<span>数据资源</span>的企业共同合作推动数据产业发展做出重大贡献。期待与您一起携手开启智能化新时代！
+          </p>
+        </div>
+
+
+
+      </div>
+      <div class="row cooperation-flow">
+        <div class="col-sm-12 col-xs-12">
+          <div class="process" aos="fade-right" aos-easing="ease" aos-delay="200">
+            <p>售前<br>咨询</p>
+          </div>
+          <img src="/static/newimg/cooperation/arrow.jpg" alt="">
+          <div class="process" aos="fade-right" aos-easing="ease" aos-delay="300">
+            <p>定制<br>方案</p>
+          </div>
+          <img src="/static/newimg/cooperation/arrow.jpg" alt="" >
+          <div class="process" aos="fade-right" aos-easing="ease" aos-delay="400">
+            <p>签订<br>合同</p>
+          </div>
+          <img src="/static/newimg/cooperation/arrow.jpg" alt="" >
+          <div class="process" aos="fade-right" aos-easing="ease" aos-delay="500">
+            <p>提供<br>数据</p>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="megobusiness container">
+        <a class="businessconsulting-btn" href="/have_data/" >我有数据</a>
+
+      </div>
+    </div>
+    <!-- <div class="jumbotron">
+            <div style="width: 100%;height: 100%; background-color:rgba(0,0,0,0.4);">
+                <div class="container">
+                    <h2 class="title" aos="fade-up" aos-easing="ease" aos-delay="200">数据合作平台</h2>
+                    <p aos="fade-up" aos-easing="ease" aos-delay="400">致力于构建多方安全的数据融合服务生态，为客户提供基于多源数据融合的数据系统、数据洞察、数据应用服务
+                    <p aos="fade-up" aos-easing="ease" aos-delay="500">数据来源涵盖国内几十家主流数据源，支持连接所有常见关系型、非关系型或特异数据源，接口实时稳定可靠</p>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="item container">
+            <h3 class="title-hr">数据接口服务</h3>
+            <hr>
+            <div class="row interface">
+                <div class="col-sm-6 unit">
+                    <p class="title">个体数据接口</p>
+                    <div class="detail">
+                        <img src="/static/image/cooper/one1.png" alt="" height="110">
+                        <ul class="list">
+                            <li>个体信息核验</li>
+                            <li>个体资产/征信</li>
+                            <li>个体行为标签</li>
+                            <span>...</span>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 unit">
+                    <p class="title">企业数据接口</p>
+                    <div class="detail">
+                        <img src="/static/image/cooper/form1.png" alt="" height="120">
+                        <ul class="list">
+                            <li>企业工商信息</li>
+                            <li>企业风险信息</li>
+                            <li>企业经营信息</li>
+                            <span>...</span>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="viewall">
+                <a href="/interfaces/" class="btn btn-default"> 查看所有 </a>
+            </div>
+        </div>
+        <div class="item container">
+            <h3 class="title-hr" aos="fade-up" aos-easing="ease" aos-delay="200">数据服务方向</h3>
+            <hr>
+            <div class="row service">
+                <div class="media-wrapper col-sm-6" aos="zoom-in" aos-easing="ease" aos-delay="100">
+                    <div class="media unit">
+                        <a class="media-left" href="#">
+                            <img class="media-object" src="/static/image/cooper/form2.png" width="80" alt="">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">企业数据资产管理</h4>
+                            帮助企业建立第一方数据管理平台，全面了解自身数据资产状况；基于榕树数据网关，打通与第三方多数据平台的互通
+                        </div>
+                    </div>
+                </div>
+                <div class="media-wrapper col-sm-6" aos="zoom-in" aos-easing="ease" aos-delay="200">
+                    <div class="media unit">
+                        <a class="media-left" href="#">
+                            <img class="media-object" src="/static/image/cooper/service2.png" width="80" alt="">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">数据网关与数据标签 </h4>
+                            企业/商户/个体多维模型画像，包含多达上千个维度标签，实现对个体特征的全 面精准画像与偏好跟踪
+                        </div>
+                    </div>
+                </div>
+                <div class="media-wrapper col-sm-6" aos="zoom-in" aos-easing="ease" aos-delay="300">
+                    <div class="media unit">
+                        <a class="media-left" href="#">
+                            <img class="media-object" src="/static/image/cooper/people.png" width="80" alt="">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">产品对标与人群洞察
+                            </h4>基于榕树多源数据能力，帮助企业客户进行本竞品分析，对目标人群进行定位
+                        </div>
+                    </div>
+                </div>
+                <div class="media-wrapper col-sm-6" aos="zoom-in" aos-easing="ease" aos-delay="400">
+                    <div class="media unit">
+                        <a class="media-left" href="#">
+                            <img class="media-object" src="/static/image/cooper/shopping.png" width="80" alt="">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">数据驱动精准营销
+                            </h4>
+                            基于榕树 superID 数据体系，打通各类 ID（手机号/卡号/设备号....）的对应关系，帮助企业实现更加精准的营销投放
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item container">
+            <h3 class="title-hr" aos="fade-up" aos-easing="ease" aos-delay="200">数据优势</h3>
+            <hr>
+            <dir class="row advantage" aos="fade-up" aos-easing="ease" aos-delay="400">
+                <div class="col-sm-4 inner">
+                    <img class="media-object" src="/static/image/cooper/data.png" width="80" alt="">
+                    <h2>数据覆盖主流数据源</h2>
+                    <p>
+                        数据来源涵盖国内几十家主流数据源，支持连接所有常见关系型、非关系型或特异 数据源，接口实时稳定可靠
+                    </p>
+                </div>
+                <div class="col-sm-4 inner">
+                    <img class="media-object" src="/static/image/cooper/low.png" width="80" alt="">
+                    <h2>数据来源合法合规 </h2>
+                    <p>提供资源共享且风险隔离的数据安全框架，授权、脱敏、来源评估、风险分类、身份控制、权限管理、审核备案全方位数据使用保障
+                    </p>
+                </div>
+                <div class="col-sm-4 inner">
+                    <img class="media-object" src="/static/image/cooper/setting.png" width="80" alt="">
+                    <h2>数据系统易接易用 </h2>
+                    <p>集成主流框架，易用的图形界面，现有的语言和工具，无缝扩展到多源数据环境中，数据应用方无需系统改造，支持网页版接入
+                    </p>
+                </div>
+            </dir>
+        </div>
+        <div class="item container">
+            <div class="becooper">
+                <h3 aos="fade-up" aos-easing="ease" aos-delay="200">成为数据合作伙伴</h3>
+                <p aos="zoom-in" aos-easing="ease" aos-delay="400">
+                    榕树网络是国内唯一处理过多个超级数据源、数百亿级数据量，开发多个成熟商用数据产品的团队。核心团队来自于Oracle，银联，平安 ，阿里等中美两国大数据行业数据、 模型、算法等领域专家。拥有跨数据源建模及相互校验、同态加密、SMC、Box Computing等多项核心技术。团队服务过近百家500强客户，拥有一 批知名品牌标杆案例，覆盖大数据营销、大数据风控产品等。我们愿与人工智能企业、区块链团队和有数据资源的企业共同合作推动数据产业发展做出重大贡献。期待与您一起携手开启智能化新时代！
+                </p>
+                <div class="steps">
+                    <p aos="fade-right" aos-easing="ease" aos-delay="200">售前咨询</p>
+                    <span class="glyphicon glyphicon-play"></span>
+                    <p aos="fade-right" aos-easing="ease" aos-delay="300"> 定制方案</p>
+                    <span class="glyphicon glyphicon-play"></span>
+                    <p aos="fade-right" aos-easing="ease" aos-delay="400">签订合同</p>
+                    <span class="glyphicon glyphicon-play"></span>
+                    <p aos="fade-right" aos-easing="ease" aos-delay="500">提供数据</p>
+                </div>
+                <div class="tobe" aos="fade-up" aos-easing="ease" aos-delay="600">
+                    <a href="/have_data/"  class="btn btn-primary" style="text-decoration: none; color: white">我有数据</a>
+                </div>
+            </div>
+        </div> -->
+  </div>
+</section>
+
+{% endblock %}
