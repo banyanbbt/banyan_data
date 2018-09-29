@@ -1,0 +1,128 @@
+{% extends 'layouts/default.html' %}
+{% block title %}我有数据-{% endblock title %}
+{% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation" style="background: #3b3faa;">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li class="active">
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="have-data-wrapper" class="padding-top-80 main-section">
+    <div id="have-data" class="container">
+        <h3 class="title">
+            <a href="/cooperation/">数据合作</a> /
+            <span>我有数据</span>
+        </h3>
+        <hr>
+        <div class="content">
+            <form class="form-horizontal" role="form">
+
+                <div class="form-group">
+                    <label for="contact_name" class="col-sm-2 control-label">联系人姓名：</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="contact_name" name="contact_name" >
+                        <span id="contact_name_error" style="color: red"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact_mobile" class="col-sm-2 control-label">手机号：</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="contact_mobile" name="contact_mobile" >
+                        <span id="contact_mobile_error" style="color: red"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="data_num" class="col-sm-2 control-label">数据量(条)：</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="data_num" name="data_num" >
+                        <span id="data_num_error" style="color: red"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="data_field" class="col-sm-2 control-label">数据字段：</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="data_field" name="data_field" rows="5" ></textarea>
+                        <span id="data_field_error" style="color: red"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="data_describe" class="col-sm-2 control-label">数据描述：</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="data_describe" name="data_describe" rows="5" ></textarea>
+                        <span id="data_describe_error" style="color: red"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-default" onclick="iHaveData()">提交需求</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
