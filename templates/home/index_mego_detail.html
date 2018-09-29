@@ -1,0 +1,225 @@
+{% extends 'layouts/default.html' %}
+{% block title %}境外旅游-{% endblock title %}
+{% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li class="active">
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="home-wrapper" class="main-section megowapper">
+  <div id="home">
+      <div class="dz-banner mego-banner">
+        <div class="container">
+            <div class="left col-md-6"  aos="fade-up" aos-easing="ease" aos-delay="200">
+                <h1 class="title">境外旅游 畅享优惠</h1>
+                <p class="slogn">榕树数据为您免费提供境外购物优惠券</p>
+                <a class="more" href="http://mego.fun" target="_blank" >立即领取 ></a>
+            </div>
+            <div class="right col-md-6"  aos="fade-up" aos-easing="ease" aos-delay="100">
+                <img src="/static/image/newimage/2/lvyou.png" alt="" height="300px" >
+            </div>
+        </div>
+      </div>
+
+    <div class="vw-item container">
+      <h3 class="title-hr">榕树数据·境外旅游</h3>
+      <hr>
+      <div>
+        <p>榕树数据结合银联数据、运营商数据、线上搜索行为、地理位置信息等，对用户线上和线下行为进行分析，构建多维、准确、及时的全息画像体系。为境外旅游行业提供短信、H5页面、小程序等多种触达方式和数据解决方案， </p>
+        <div class="car-data row">
+          <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="200">
+            <div class="media">
+              <a class="media-left" >
+                            <img class="media-object" src="/static/image/newimage/icon1.png" width="120" alt="媒体对象">
+                        </a>
+              <div class="media-body">
+                <h4 class="media-heading">多源数据</h4>
+                <ul>
+                  <li>运营商数据</li>
+                  <li>银联消费数据</li>
+                  <li>互联网行为</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="400">
+            <div class="media">
+              <a class="media-left" >
+                            <img class="media-object" src="/static/image/dazhong/hua.png" width="120" alt="媒体对象">
+                        </a>
+              <div class="media-body">
+                <h4 class="media-heading">人群圈选</h4>
+                <ul>
+                  <li>多维标签筛选目标人群</li>
+                  <li>目标用户线下行为轨迹</li>
+                  <li>消费水平及偏好</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="500">
+            <div class="media">
+              <a class="media-left" >
+                            <img class="media-object" src="/static/image/newimage/icon3.png" width="120" alt="媒体对象">
+                        </a>
+              <div class="media-body">
+                <h4 class="media-heading">精准投放</h4>
+                <ul>
+                  <li>算法精准</li>
+                  <li>多种渠道触达</li>
+                  <li>实时数据反馈</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="600">
+            <div class="media">
+              <a class="media-left" >
+                            <img class="media-object" src="/static/image/dazhong/fang.png" width="120" alt="媒体对象">
+                        </a>
+              <div class="media-body">
+                <h4 class="media-heading">整体解决方案</h4>
+                <ul>
+                  <li>榕树数据实时短信触达</li>
+                  <li>场景激励机制</li>
+                  <li>平台研发运营</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="megowidth">
+      <div class="product container">
+        <h3 class="title-hr">产品优势</h3>
+        <hr>
+        <div class="feature row">
+          <div class="col-sm-3">
+            <div class="couponthumbnail">
+              <img src="/static/image/newimage/advantage-img-33.svg" alt="">
+              <div class="caption">
+                <div class="title">
+
+                  <h4>海量数据</h4>
+                  <p>
+                    数据源涵盖运营商、银联、互联网行为，地理位置信息等，覆盖90%以上用户，助你全面数据分析
+
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="couponthumbnail">
+              <img src="/static/image/newimage/advantage-img-34.svg" alt="">
+              <div class="caption">
+                <div class="title">
+
+                  <h4>全息画像</h4>
+                  <p>
+                    1000+线上、线下行为标签，全方位刻画用户兴趣、特征
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="couponthumbnail">
+              <img src="/static/image/newimage/advantage-img-35.svg" alt="">
+              <div class="caption">
+                <div class="title">
+                  <h4>算法精准</h4>
+                  <p>
+                    引进国内外前沿、实用的算法模型，保障分析的准确性
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="couponthumbnail">
+              <img src="/static/image/newimage/advantage-img-36.svg" alt="">
+              <div class="caption">
+                <div class="title">
+
+                  <h4>数据及时</h4>
+                  <p>
+                    自动化数据分析平台，保障每日更新数据，接口极速响应
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="megobusiness container">
+      <a class="businessconsulting-btn" href="/#contact-us">商务咨询</a>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

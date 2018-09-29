@@ -1,0 +1,224 @@
+{% extends 'layouts/default.html' %}
+{% block title %}奢侈品牌-{% endblock title %}
+{% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li class="active">
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<section id="home-wrapper" class="main-section megowapper">
+  <div id="home">
+    <div class="dz-banner">
+      <div class="container">
+          <div class="left col-md-6" aos="fade-up" aos-easing="ease" aos-delay="200">
+              <h1 class="title">奢侈品牌解决方案</h1>
+              <p class="slogn">用数据分析用户在不同阶段的身份属性，结合用户特征和偏好，进行针对性营销活动，快速获取潜在用户并提高市场转化率</p>
+          </div>
+          <div class="right col-md-6" aos="fade-up" aos-easing="ease" aos-delay="100">
+              <img src="/static/image/newimage/4/lux.png" alt="" height="300px" >
+          </div>
+      </div>
+    </div>
+
+    <div class="vw-item container">
+      <h3 class="title-hr">榕树数据·奢侈品牌</h3>
+      <hr>
+      <div>
+        <p>多源数据分析用户消费水平、消费偏好、互联网浏览行为，制定千人千面的营销策略。通过大数据挖掘建立有效的数据挖掘及经营模型，实现分析用户行为、深度细分客户群、精准定位客户需求，提供营销个性化、差异化解决方案。  </p>
+        <div class="car-data row">
+          <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="200">
+            <div class="media">
+              <a class="media-left">
+                            <img class="media-object" src="/static/image/dazhong/hua.png" width="120" alt="媒体对象">
+                        </a>
+              <div class="media-body">
+                <h4 class="media-heading">用户周期管理</h4>
+                <ul>
+                  <li>存量客户经营</li>
+                  <li>优质客户流失预警</li>
+                  <li>种子用户磁力营销</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="400">
+            <div class="media">
+              <a class="media-left">
+                            <img class="media-object" src="/static/image/newimage/luxury-icon1.png" width="120" alt="媒体对象">
+                        </a>
+              <div class="media-body">
+                <h4 class="media-heading">人群圈选</h4>
+                <ul>
+                  <li>多维标签筛选目标人群</li>
+                  <li>目标用户线下行为轨迹</li>
+                  <li>消费水平及偏好</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="500">
+            <div class="media">
+              <a class="media-left">
+                            <img class="media-object" src="/static/image/newimage/icon3.png" width="120" alt="媒体对象">
+                        </a>
+              <div class="media-body">
+                <h4 class="media-heading">精准投放</h4>
+                <ul>
+                  <li>算法精准</li>
+                  <li>多种渠道触达</li>
+                  <li>实时数据反馈</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="600">
+            <div class="media">
+              <a class="media-left">
+                            <img class="media-object" src="/static/image/newimage/luxury-icon3.png" width="120" alt="媒体对象">
+                        </a>
+              <div class="media-body">
+                <h4 class="media-heading">竞品分析</h4>
+                <ul>
+                  <li>竞争对手信息及用户反馈</li>
+                  <li>舆情监控</li>
+                  <li>消费者诉求分析及趋势</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="megowidth">
+      <div class="product container">
+        <h3 class="title-hr">产品优势</h3>
+        <hr>
+        <div class="feature row">
+          <div class="col-sm-3">
+            <div class="couponthumbnail">
+              <img src="/static/image/newimage/advantage-img-33.svg" alt="">
+              <div class="caption">
+                <div class="title">
+
+                  <h4>海量数据</h4>
+                  <p>
+                    涵盖银联消费画像和评级、互联网行为画像及消费评级；洞悉用户消费动机和消费偏好
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="couponthumbnail">
+              <img src="/static/image/newimage/advantage-img-34.svg" alt="">
+              <div class="caption">
+                <div class="title">
+
+                  <h4>全息画像</h4>
+                  <p>
+                    企业/商户/个体多维模型画像，包含多达上千个维度标签，实现对个体特征的全面精准画像与偏好跟踪
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="couponthumbnail">
+              <img src="/static/image/newimage/advantage-img-35.svg" alt="">
+              <div class="caption">
+                <div class="title">
+                  <h4>Super ID</h4>
+                  <p>
+                    基于榕树superID数据体系，打通各类ID( 手机号/卡号/设备号....)的对应关系，帮助企业实现更加精准的营销投放
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="couponthumbnail">
+              <img src="/static/image/newimage/advantage-img-36.svg" alt="">
+              <div class="caption">
+                <div class="title">
+
+                  <h4>数据及时</h4>
+                  <p>
+                    及时更新，数据才有活力，自动化数据采集系统确保每日更新数据
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="megobusiness container">
+      <a class="businessconsulting-btn" href="/#contact-us">商务咨询</a>
+
+    </div>
+
+  </div>
+</section>
+{% endblock %}

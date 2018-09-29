@@ -1,0 +1,194 @@
+{% extends 'layouts/default.html' %}
+{% block title %}汽车行业-{% endblock title %}
+{% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li class="active">
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="home-wrapper" class="main-section">
+    <div id="home">
+        <div class="dz-banner">
+            <div class="container">
+                <div class="left col-md-6" aos="fade-up" aos-easing="ease" aos-delay="200">
+                    <div>
+                        <img src="/static/image/dazhong/1/da-logo.png" alt="" height="40px">
+                    </div>
+                    <h1 class="title">诚邀您的试驾</h1>
+                    <p class="slogn">推荐好友试驾夏朗  赢儿童安全座椅</p>
+                    <a class="more" href="http://campaign.vwimport.cn/sharan/sharan2018q3campaign/Index.html?utm_source=5DGRAVITY&utm_medium=Data_Marketing" target="_blank" >参与试驾 ></a>
+                </div>
+                <div class="right col-md-6" aos="fade-up" aos-easing="ease" aos-delay="100">
+                    <img src="/static/image/dazhong/1/car.png" alt="" height="300px" >
+                </div>
+            </div>
+        </div>
+
+        <div class="vw-item container">
+            <h3 class="title-hr">榕树数据 · 汽车行业</h3>
+            <hr>
+            <div>
+                <p>榕树数据汽车行业解决方案依托雄厚的数据资源，行业领先的数据采集、数据处理能力，建立了丰富的汽车行业数据分析算法模型，致力于汽车全生命周期的大数据赋能。基于对汽车行业的深度理解，形成了一套流水线式的应用开发标准流程，已经为众多汽车厂商在产品设计开发、采购、生产制造、市场营销、销售、售后服务等众多应用场景，提供了大数据分析和智慧决策支持服务；包括数据定制报告、数据应用SAAS平台、车企大数据解决方案等多种专业的数据服务。 </p>
+                <div class="car-data row">
+                    <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="200">
+                        <div class="media">
+                            <a class="media-left">
+                                <img class="media-object" src="/static/image/dazhong/hua.png" width="120" alt="媒体对象">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">画像分析</h4>
+                                <ul>
+                                    <li>车型画像分析</li>
+                                    <li>用户画像分析</li>
+                                    <li>竞品画像分析</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="400">
+                        <div class="media">
+                            <a class="media-left">
+                                <img class="media-object" src="/static/image/dazhong/fang.png" width="120" alt="媒体对象">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">研究报告</h4>
+                                <ul>
+                                    <li>品牌定位分析</li>
+                                    <li>市场洞察分析</li>
+                                    <li>舆情监测分析</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="500">
+                        <div class="media">
+                            <a class="media-left">
+                                <img class="media-object" src="/static/image/dazhong/tou.png" width="120" alt="媒体对象">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">精准营销</h4>
+                                <ul>
+                                    <li>榕树互信通授权</li>
+                                    <li>广告投放策略</li>
+                                    <li>销售线索挖掘</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" aos="fade-up" aos-easing="ease" aos-delay="600">
+                        <div class="media">
+                            <a class="media-left">
+                                <img class="media-object" src="/static/image/dazhong/report.png" width="120" alt="媒体对象">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">整体解决方案</h4>
+                                <ul>
+                                    <li>榕树磁力营销方案</li>
+                                    <li>场景激励机制</li>
+                                    <li>平台研发运营</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="vw-item container">
+            <h3 class="title-hr">榕树互信通</h3>
+            <hr>
+            <div class="mtc">
+                <p>榕树数据互信通云平台作为独立第三方授权机构，将用户授权协议哈希加密实时写入链上，供客户查验。授权记录具有可追溯性并不可篡改。查询主体和授权主体得到有效验证，实现授权省时高效，风险随时可控。 </p>
+                <div class="map" aos="fade-up" aos-easing="ease" aos-delay="200">
+                    <img src="/static/image/dazhong/mtc2.png" alt="" width="95%">
+                </div>
+            </div>
+        </div>
+        <div class="vw-item container">
+            <h3 class="title-hr" >客户案例</h3>
+            <hr>
+            <div class="project-content row">
+                <div class="project-item col-xs-6 col-sm-3" aos="fade-up-right" aos-easing="ease" aos-delay="100">
+                    <img src="/static/image/dazhong/toyota.jpg" alt="" ondragstart="return false;">
+                    <span>广汽丰田</span>
+                </div>
+                <div class="project-item col-xs-6 col-sm-3" aos="fade-up-right" aos-easing="ease" aos-delay="200">
+                    <img src="/static/image/dazhong/nissan.jpg" alt="" ondragstart="return false;">
+                    <span>东风日产</span>
+                    </a>
+                </div>
+                <div class="project-item col-xs-6 col-sm-3" aos="fade-up-right" aos-easing="ease" aos-delay="300">
+                    <img src="/static/image/dazhong/hq.jpg" alt="" ondragstart="return false;">
+                    <span>红旗汽车</span>
+                </div>
+                <div class="project-item col-xs-6 col-sm-3" aos="fade-up-right" aos-easing="ease" aos-delay="400">
+                    <img src="/static/image/dazhong/dzlogo.jpg" alt="" ondragstart="return false;">
+                    <span>大众夏朗</span>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+</section>
+{% endblock %}
