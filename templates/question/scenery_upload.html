@@ -1,0 +1,175 @@
+{% extends 'layouts/default.html' %}
+{% load custom_filters %}
+{% load static %}
+{% block title %}做任务-{% endblock title %}
+{% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation" style="background: #3b3faa;">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li>
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="tasks-detail-car-wrapper" class="padding-top-80 main-section">
+    <div id="tasks-detail-car" class="container">
+        <div class="content">
+            <h3>
+                <span class="glyphicon glyphicon-picture"></span>{{ task.name }}
+            </h3>
+            <div class="guide">
+                <span>已完成:
+                    <span> {{ user_task|get_finish_count }} 题</span>
+                </span>
+            </div>
+            <hr>
+            <input id="task_id" type="hidden" value="{{ task.id }}">
+            <div class="information">
+                <label class="control-label" for="scenery">选择{{ task.name|transfer_task_type }}：</label>
+                <select class="select2 form-control" name="scenery" id="scenery">
+                    <option value="" selected="selected">请选择{{ task.name|transfer_task_type }}</option>
+                    {% for item in obj_list %}
+                        <option value="{{ item.id }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+            <p class="sub-title">上传图片:</p>
+            <div class="form-group">
+                <div class="file-loading">
+                    <input id="img_upload" type="file" accept="image/gif, image/jpg, image/png" multiple class="file" data-overwrite-initial="false" >
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}
+
+{% block bottom_javascript %}
+<script type="text/javascript" src="{% static 'js/select2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/fileinput.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/piexif.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/purify.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/sortable.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/zh.js' %}"></script>
+<script>
+    // 初始化景点下拉框
+    $("#scenery").select2();
+    var task_id=$("#task_id").val();
+    var i = 0; // 记录已上传图片个数
+
+    $('#img_upload').click(function () {
+        if(!$('.select2').val() ) {
+            alert('请先选择{{ task.name|transfer_task_type }}!');
+            return false;
+        }
+    })
+
+    // 上传图丿
+    $("#img_upload").fileinput({
+        language: 'zh',
+        uploadUrl: '/question/upload/',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        showClose: false,
+        fileActionSettings: {
+            showUpload: false,
+        },
+        maxFileSize: 1024,
+        maxFileCount: 5,
+        browseClass: 'btn btn-custom',
+        uploadExtraData: function () {
+            return {'task_id': task_id, 'question_id': $('#scenery').val()};
+        }
+    }).on("filebatchselected", function (event, files) {
+           if(! $('.select2').val().length) {
+                alert('清先选择{{ task.name|transfer_task_type }}');
+                window.location.reload();
+           }
+    }).on("fileuploaded", function (event, data, previewId, index) {
+        var len = $('.file-preview-thumbnails>.file-preview-frame').length; // 图片总数
+        console.log(i, len);
+        if (data.response) {
+            if (data.response['msg'] = "上传成功!") {
+                // console.log('event--->: ', event)
+                // console.log('data--->: ', data)
+                // console.log('previewId--->: ', previewId)
+                // console.log('index--->: ', index)
+                i += 1;
+                console.log(i, len);
+                if(i == len) {
+                    setTimeout(function() {
+                        alert('上传成功！')
+                        window.location.reload();
+                    }, 600)
+                }
+            }
+
+        }
+    })
+
+</script>
+
+{% endblock bottom_javascript%}

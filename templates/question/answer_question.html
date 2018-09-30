@@ -1,0 +1,232 @@
+{% extends 'layouts/default.html' %}
+{% load custom_filters %}
+{% load static %}
+{% block title %}做任务-{% endblock title %}
+{% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation" style="background: #3b3faa;">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li>
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+    {% if question.question_type == "文件翻译" %}
+        <section id="tasks-detail-car-wrapper" class="padding-top-80 main-section">
+        <div id="tasks-detail-car" class="container">
+        <div class="content">
+            <input id="task_id" type="hidden" value="{{ task_id }}">
+            <input id="question_id" type="hidden" value="{{ question.id }}">
+            <h3>
+                <span class="glyphicon glyphicon-book"></span>{{ task_name }}
+            </h3>
+            <div class="information">
+                <br>
+                <br>
+                <h5>
+                    请上传您的文件，我们会尽快审核你的成果。
+                </h5>
+
+            </div>
+            <input type="file" id="uploadFile" name="uploadFile">
+            <br>
+
+            </div>
+        </div>
+        </section>
+
+    {% else %}
+        <section id="tasks-detail-car-wrapper" class="padding-top-80 main-section">
+        <div id="tasks-detail-car" class="container">
+            <div class="content">
+                <input id="task_id" type="hidden" value="{{ task_id }}">
+                <input id="question_id" type="hidden" value="{{ question.id }}">
+                <h3>
+                    <span class="glyphicon glyphicon-hand-right"> {{ task_name }}</span>
+                </h3>
+                <div class="guide">
+                    <span>已完成:
+                        <span> {{ finished_count }} 题</span>
+                    </span>
+                </div>
+                <hr>
+                <div class="example-test example-test1">
+                    <h4>根据示例完成如下任务 <span id="showExample">点此查看示例</span> </h4>
+                    <div class="inner inner1">
+                        <p class="title">{% for option in answer_option %}{% if option.name == 'example' %}{{ option.example }}{% endif %}{% endfor %}</p>
+                        <form class="car-form">
+                            {% if answer_option %}
+                                <div class="left col-sm-5">
+                                    {% for option in answer_option %}
+                                        {% if forloop.counter <= 5 and option.name != 'example' %}
+                                        <div class="form-group">
+                                        <label for="brand" class="control-label" style="word-break:keep-all;">{{ option.name | en_to_cn }}：</label>
+                                        <div class="input-wrapper">
+                                            <input type="text" class="form-control" name="brand" id="brand" disabled="disabled" placeholder="{{ option.example }}">
+                                        </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="left col-sm-2"></div>
+                                <div class="left col-sm-5">
+                                    {% for option in answer_option %}
+                                        {% if forloop.counter >= 6 and option.name != 'example' %}
+                                        <div class="form-group">
+                                        <label for="brand" class="control-label" style="word-break:keep-all;">{{ option.name | en_to_cn }}：</label>
+                                        <div class="input-wrapper">
+                                            <input type="text" class="form-control" name="brand" id="brand" disabled="disabled" placeholder="{{ option.example }}">
+                                        </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+
+                <div style="clear: both"></div>
+
+                <div class="example-test">
+                    <div class="inner inner2">
+                        <p class="title">{{ question.content }}</p>
+                        <form class="car-form" id="question_form" method="post" action="/question/{{ question.code }}/">{% csrf_token %}
+                            {% if answer_option %}
+                                <div class="left col-sm-5">
+                                    {% for option in answer_option %}
+                                        {% if forloop.counter <= 5 and option.name != 'example' %}
+                                        <div class="form-group">
+                                            <label for="{{ option.name }}" class="control-label" style="word-break:keep-all;">{{ option.name | en_to_cn }}：</label>
+                                            <div class="input-wrapper">
+                                                <input type="text" class="form-control" name="{{ option.name }}" id="{{ option.name }}" {% if option.is_required %}required{% endif %} placeholder=" ">
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="left col-sm-2"></div>
+                                <div class="left col-sm-5">
+                                    {% for option in answer_option %}
+                                        {% if forloop.counter >= 6 and option.name != 'example' %}
+                                        <div class="form-group">
+                                            <label for="{{ option.name }}" class="control-label" style="word-break:keep-all;">{{ option.name | en_to_cn }}：</label>
+                                            <div class="input-wrapper">
+                                                <input type="text" class="form-control" name="{{ option.name }}" id="{{ option.name }}" {% if option.is_required %}required{% endif %} placeholder=" ">
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="down" style="clear: both; text-align: center;">
+                                <button class="btn btn-primary" type="submit">提交</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    {% endif %}
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}
+{% block bottom_javascript %}
+    <script type="text/javascript" src="{% static 'js/fileinput.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/piexif.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/purify.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/sortable.min.js' %}"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/locales/zh.min.js"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/messages_zh.js' %}"></script>
+    <script>
+    $('#uploadFile').fileinput({
+    language: 'zh',
+    uploadUrl: '/question/upload/',
+    removeFromPreviewOnError:true,
+    maxFileSize: 20480,
+    showCaption: true,
+    showUpload: false,
+    showRemove: false,
+    showClose: false,
+    browseClass: 'btn btn-primary',
+    uploadExtraData:function(){
+        return {'task_id':$("#task_id").val(), 'question_id':$('#question_id').val()};
+    }
+    }).on("fileuploaded", function(event, data) {
+        if(data.response)
+        {
+            if (data.response['msg']="上传成功!"){
+                location.href='/task/'
+            }
+
+        }});
+    </script>
+    <script>
+    $().ready(function () {
+        $("#question_form").validate();
+    });
+</script>
+
+{% endblock bottom_javascript%}
