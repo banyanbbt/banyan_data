@@ -1,0 +1,218 @@
+{% extends 'layouts/dashboard.html' %}{% load custom_filters %}{% load static %}
+{% block title %}个人中心-{% endblock title %}
+{% block content %}
+
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation" style="background: #3b3faa;">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li>
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li class="active">
+                        <a href="/task/">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="desk" class="main-section">
+    <div id="" class="desk-wrapper">
+        <div class="desk-nav">
+            <ul>
+                {% if user and user.user_type == 'company' %}
+                <li class="options ">
+                    <a href="/billing/"><span class="glyphicon glyphicon-bitcoin"></span>账单查询</a>
+                </li>
+                <li class="options">
+                    <a href="/product/"><span class="glyphicon glyphicon-tasks"></span>接口列表</a>
+                </li>
+                {% endif %}
+                <li class="options">
+                    <a href="/task/"><span class="glyphicon glyphicon-edit"></span>我的任务</a>
+                </li>
+                <li class="options active">
+                    <a href="/user/profile/"><span class="glyphicon glyphicon-user"></span>个人中心</a>
+                </li>
+            </ul>
+        </div>
+        <div class="desk-content">
+
+            <div class="personal-intro">
+                <h3>个人信息</h3>
+                <div class="personal_info">
+                    <div class="email">
+                        <span>邮箱：{{ email }}</span>
+                        {% if user and user.user_type == 'company' %}
+                            <a href="javascript:void(0);" class="valid">已验证</a>
+                        {% else %}
+                            {% if is_valid_email %}
+                                <a href="javascript:void(0);" class="valid">已验证</a>
+                            {% else %}
+                                <a href="javascript:void(0);" onclick="validateEmail('{{ email }}')" class="valid">验证邮箱</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <!-- 验证邮箱的弹窗 -->
+                    <div class="modal fade" id="validateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        验证邮箱
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    邮件已发送，请注意查收
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+                </div>
+            </div>
+            <div class="account-intro">
+                <h3>账户信息</h3>
+                <div class="account">
+                    <div class="balance">
+                        <div class="topleft">
+                            <h4>BBN 余额</h4>
+                            <p>Account Balance</p>
+                            <strong>{{ bbn_balance }}</strong>
+                        </div>
+                        <div class="operate">
+                            {% if user and user.user_type == 'company' %}
+                            <button type="button" class="btn btn-primary custom-title" title="企业帐号不可提现">申请提现</button>
+                            {% else %}
+                            <button type="button" class="btn btn-primary custom-title"  {% if is_valid_email %} data-toggle="modal" data-target="#withdrawModal" {% endif %} title="大于 100 且验证邮箱才能提现">申请提现</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="exampleModalLabel">申请提现</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                <div class="form-group">
+                                    <label for="withdraw_address" class="control-label">提现地址:</label>
+                                    <input type="text" class="form-control" id="withdraw_address">
+                                    <span id="addr-error" style="color: red"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="withdraw_count" class="control-label">提现数量(必须是100的整数倍且小于账户BBN余额):</label>
+                                    <input class="form-control" type="number" id="withdraw_count">
+                                    <span id="count-error" style="color: red"></span>
+                                </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary" onclick="withdraw({{ bbn_balance }})">提现</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="balance-intro">
+                {% if rewards %}
+                <h3>收支明细</h3>
+                <div class="account-detail">
+                    <div class="table">
+                        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>收支</th>
+                                    <th>类别</th>
+                                    <th>时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for reward in rewards %}
+                                <tr>
+                                    <td>{{ reward.bbn_count| symbol }}</td>
+                                    <td>{{ reward.reason}}</td>
+                                    <td>{{ reward.created }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+
+</section>
+
+{% endblock %}
+{% block bottom_javascript %}
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+{% endblock %}
