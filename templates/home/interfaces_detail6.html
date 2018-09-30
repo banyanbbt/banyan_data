@@ -1,0 +1,858 @@
+{% extends 'layouts/default.html' %}
+{% block title %}电商消费行为评级-{% endblock title %}
+{% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation" style="background: #3b3faa;">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li class="active">
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="interfaces-wrapper" class="padding-top-80 main-section">
+    <div id="interfaces" class="container">
+        <h3 class="title">
+            <a href="/cooperation/">数据合作</a> /
+            <a href="/interfaces/">接口产品</a> /
+            <span>电商消费行为评级 </span>
+        </h3>
+        <hr>
+        <div class="introduction">
+            <div class="logo-img">
+                <img src="/static/image/cooper/vow/6.png" alt="" height="80">
+            </div>
+            <div class="abstract">
+                <h4> 电商消费行为评级
+                    <span>5 BBN/次
+                        <span>（最终定价以商务协议为准）</span>
+                    </span>
+                </h4>
+                <p>查询个人电商平台消费标签 </p>
+                <p>适用于：信贷、精准营销 </p>
+            </div>
+            <a class="btn btn-default apply" data-toggle="modal" data-target="#apply-for">申请试用</a>
+
+            <div class="modal fade" id="apply-for" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">数据接口产品试用申请</h4>
+                        </div>
+                        <div class="modal-body" style="padding: 40px;">
+                            <form class="" id="feedback-form" method="POST" action="/feedback/">
+                                <div>
+                                    <h4>产品名称：<span id="product_name">电商消费行为评级</span></h4>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="form-group row">
+                                    <label for="feedback_content" class="control-label col-sm-3">预计调用量:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="feedback_content" name="feedback_content" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="contact_name" class="control-label col-sm-3">联系人姓名:</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="contact_name" name="contact_name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="contact_mobile" class="control-label col-sm-3">手机号:</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="contact_mobile" name="contact_mobile" required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default apply-interface" onclick="applyInterface();" >提交申请</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <div class="detail">
+            <div class="index">
+                <span class="active">产品说明</span>
+                <span>接入指南</span>
+                <span>接口规范</span>
+                <span>通用返回码</span>
+            </div>
+            <div class="explain">
+                <div class="item item-show">
+                    <h2>1. 产品说明</h2>
+                    <h4>参数输入要求</h4>
+                    <h4>以下接口文档内，将对请求参数是否必填作出说明。</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>输入要求</th>
+                                <th>英文名称</th>
+                                <th>简写名称</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>必填</td>
+                                <td>Must</td>
+                                <td>M</td>
+                            </tr>
+                            <tr>
+                                <td>条件必填</td>
+                                <td>Conditional</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td>选填</td>
+                                <td>Optional</td>
+                                <td>O</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>1.1 产品介绍</h3>
+                    <p>根据输入的标签编号和姓名、身份证号、手机号、银行卡号四要素查询对应标签的属性值。</p>
+                    <h3>1.2 请求参数示例</h3>
+                    <p class="code">
+                        <code>
+                            {
+                            <br> "productId" : " H0201",
+                            <br> "customerId" : "1522649248140",
+                            <br> "portraits" : ["H010291",
+                            <br> "H010292",
+                            <br> "H010293"],
+                            <br> "name" : "赵某某",
+                            <br> "cid" : "330501******6419",
+                            <br> "card" : "621415*******2061",
+                            <br> "mobile" : "188****0286"
+                            <br> }
+                            <br>
+                        </code>
+                    </p>
+                    <h3>1.3 请求参数说明</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>参数</th>
+                                <th>类型</th>
+                                <th>输入要求</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>productId</td>
+                                <td>String</td>
+                                <td>M</td>
+                                <td>产品唯一编号</td>
+                            </tr>
+                            <tr>
+                                <td>customerId</td>
+                                <td>String</td>
+                                <td>M</td>
+                                <td>客户请求流水号，确保唯一</td>
+                            </tr>
+                            <tr>
+                                <td>name</td>
+                                <td>String</td>
+                                <td>M</td>
+                                <td>姓名</td>
+                            </tr>
+                            <tr>
+                                <td>card</td>
+                                <td>String</td>
+                                <td>O</td>
+                                <td>银行卡卡号</td>
+                            </tr>
+                            <tr>
+                                <td>cid</td>
+                                <td>String</td>
+                                <td>M</td>
+                                <td>身份证号</td>
+                            </tr>
+                            <tr>
+                                <td>mobile</td>
+                                <td>String</td>
+                                <td>M</td>
+                                <td>手机号</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>1.4 返回示例</h3>
+                    <h4>以下仅为简单示例</h4>
+                    <h4>查询成功</h4>
+                    <p class="code">
+                        <code>
+                            {
+                            <br> "result": {
+                            <br> "success": true,
+                            <br> "data": {
+                            <br> "H010291": "2",
+                            <br> "H010292": "2",
+                            <br> "H010293": "2"
+                            <br> }
+                            <br> },
+                            <br> "code": "200",
+                            <br> "gid": "49c89589980d800",
+                            <br> "customerId": "1522812230817",
+                            <br> "message": "查询成功",
+                            <br> "status": "1000"
+                            <br> }
+                            <br>
+                        </code>
+                    </p>
+                    <h4>查无此结果</h4>
+                    <p class="code">
+                        <code>
+                            {
+                            <br> "code": "200",
+                            <br> "gid": "497adcf4880d800",
+                            <br> "customerId": "1522649238972",
+                            <br> "message": "没有查询到结果",
+                            <br> "status": "2001"
+                            <br> }
+                        </code>
+                    </p>
+                    <h4>失败</h4>
+                    <p class="code">
+                        <code>
+                            {
+                            <br> "code": "500",
+                            <br> "gid": "499f2b35680d800",
+                            <br> "customerId": "1522725377500",
+                            <br> "message": "渠道异常",
+                            <br> "status": "9902"
+                            <br> }
+                            <br>
+                        </code>
+                    </p>
+                    <h3>1.5 返回字段说明</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>节点名称</th>
+                                <th>字段名</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>code</td>
+                                <td>返回码</td>
+                                <td>参见2.附录</td>
+                            </tr>
+                            <tr>
+                                <td>status</td>
+                                <td>状态码</td>
+                                <td>参见2.附录</td>
+                            </tr>
+                            <tr>
+                                <td>message</td>
+                                <td>状态信息</td>
+                                <td>参见2.附录</td>
+                            </tr>
+                            <tr>
+                                <td>gid</td>
+                                <td>流水号</td>
+                                <td>我方返回唯一id</td>
+                            </tr>
+                            <tr>
+                                <td>customerId</td>
+                                <td>客户请求流水号</td>
+                                <td>原样返回</td>
+                            </tr>
+                            <tr>
+                                <td>result</td>
+                                <td>查询结果</td>
+                                <td>见result节点说明</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>result节点说明</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>节点名称</th>
+                                <th>字段名</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>success</td>
+                                <td>状态信息</td>
+                                <td>返回true or false</td>
+                            </tr>
+                            <tr>
+                                <td>data</td>
+                                <td>具体结果</td>
+                                <td>电商消费行为标签属性值</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>2. 附录</h2>
+                    <h3>2.1 响应吗和状态码</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>响应码</th>
+                                <th>状态码</th>
+                                <th>状态信息</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>200</td>
+                                <td>2000</td>
+                                <td>查询成功</td>
+                            </tr>
+                            <tr>
+                                <td>200</td>
+                                <td>2001</td>
+                                <td>没有查询到结果</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>2.2 通用响应码和状态码</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>响应码</th>
+                                <th>状态码</th>
+                                <th>状态信息</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>400</td>
+                                <td>9800</td>
+                                <td>账户不存在或被禁用</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9801</td>
+                                <td>访问资源不存在</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9802</td>
+                                <td>请求IP没有访问权限</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9803</td>
+                                <td>没有此产品访问权限</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9804</td>
+                                <td>参数为空或格式错误</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9805</td>
+                                <td>该帐号余额不足</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9806</td>
+                                <td>此接口请求次数达到上限</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9807</td>
+                                <td>报文解析错误</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9808</td>
+                                <td>验签失败</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9809</td>
+                                <td>查询时间区间不正确</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9810</td>
+                                <td>访问产品不存在</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9811</td>
+                                <td>标签没有权限访问</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9812</td>
+                                <td>密钥未配置或过期</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9813</td>
+                                <td>产品后台配置异常</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>9900</td>
+                                <td>系统异常</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>9901</td>
+                                <td>服务异常</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>9902</td>
+                                <td>渠道异常</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>9903</td>
+                                <td>请求超时</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="item">
+                    <p>接口接入指南，意在指导客户从完成账号申请，到接口接入主要步骤的说明。</p>
+                    <h2>1. 试用账号接入流程</h2>
+                    <h3>1.1. 客户申请测试账号</h3>
+                    <p>
+                        客户需发送邮件，告知我方如下必备的信息，包含：公司名称、联系人姓名、联系人邮箱、联系人电话、报备公司访问 IP。
+                    </p>
+                    <h3>1.2. 运营人员审核</h3>
+                    <p>
+                        业务运营人员对客户资质做初步的审核。
+                    </p>
+                    <h3>1.3. 开通测试账号</h3>
+                    <p>
+                        客户资质审核通过后，由运营人员为客户开通账号，设置访问权限和访问次数等。并将测试账号的登录信息，以及接口对接需要的相关文档发送给客户。
+                    </p>
+                    <h2>2. 正式账号接入流程</h2>
+                    <h3>2.1. 双方签署合作协议</h3>
+                    <p>
+                        双方商务对接人员，签署合作协议，明确接口可用的时间，调用的价格。
+                    </p>
+                    <h3>2.2. 合作款项到账通知</h3>
+                    <p>
+                        我方财务人员确认合作款项到账，并通知到业务部门。
+                    </p>
+                    <h3>2.3. 开通正式账号</h3>
+                    <p>
+                        业务运营人员为客户开通正式账号，配置接口可用时间和收费价格。并将正式账号的登录信息，以及接口对接需要的相关文档发送给客户。
+                    </p>
+                </div>
+                <div class="item">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 140px;">
+                                    <strong>接口地址URL</strong>
+                                </th>
+                                <th>
+                                    <strong>https://&lt;host&gt; （见邮件）</strong>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>参数编码</strong>
+                                </td>
+                                <td>UTF-8</td>
+                                <td>参数格式</td>
+                                <td>JSON</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>请求方法</strong>
+                                </td>
+                                <td>POST</td>
+                                <td>协议类型</td>
+                                <td>HTTPs</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>请求参数示例</strong>
+                                </td>
+                                <td>{ “account” : ”123456”, “data” : ”encrypted request data”, “sign” : ” 6C768121683C45ABD83546A73DBE3284”
+                                    }
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>请求参数详情</strong>
+                                </td>
+                                <td>account</td>
+                                <td>账户号（我方分配给客户账户号）</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>data</td>
+                                <td>密文数据主体（参数主体JSON数据(见4.1.2) RSA加密后字符串），加密流程见3.1.2</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>sign</td>
+                                <td>签名（采用MD5加密account、data两个参数的值组成的字符串），签名规则见3.2</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>响应结果示例</strong>
+                                </td>
+                                <td>{ “encrypt” : true, “data” : ”encrypted response data”, “sign” : ” EE4D39671D825BA272D4D2540D095EF7”
+                                    }
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>返回参数详情</strong>
+                                </td>
+                                <td>encrypt</td>
+                                <td>数据主体是否加密标识（当请求用户的账号无法获取时，数据主体不加密，该字段为false）</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>data</td>
+                                <td>数据主体（数据主体原始响应内容由具体接口定义数据格式）,解密流程见3.1.3</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>sign</td>
+                                <td>签名（采用MD5加密encrypt、data 两个参数的值组成的字符串），验签流程见3.2</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h2>1.数据加密/解密</h2>
+                    <p>接口传输的所有数据均使用RSA公钥对参数进行加密处理。</p>
+                    <h3>1.1. 生成秘钥（首次接入时）</h3>
+                    <h4># 生成私钥</h4>
+                    <code>openssl genrsa-out app_private_key.pem 2048 </code>
+                    <h4># Java开发者需要将私钥转换成PKCS8格式</h4>
+                    <code>openssl pkcs8-topk8 -inform PEM -in app_private_key.pem -outform PEM -nocrypt -outapp_private_key_pkcs8.pem
+                        </code>
+                    <h4># 生成公钥</h4>
+                    <code>openssl rsa -in app_private_key.pem-pubout -out app_public_key.pem </code>
+                    <br>
+                    <br>
+                    <p>上述三条命令执行完成后会生成开发者可以在当前文件夹中，看到app_private_key.pem（开发者RSA私钥）、app_private_key_pkcs8.pem（pkcs8格式开发者RSA私钥）和app_public_key.pem（开发者RSA公钥）3个文件。开发者将私钥保留，将公钥告知我方，用于加密返回参数。</p>
+                    <br>
+                    <p>
+                        <strong>
+                            * 注意：
+                            <br> * Java的开发者，将pkcs8文件中的私钥去除头尾、换行和空格，作为开发者私钥。
+                            <br>
+                        </strong>
+                    </p>
+                    <h3>1.2. 请求参数加密</h3>
+                    <p class="code">
+                        <code>
+                            {
+                            <br> "name":"张三",
+                            <br> "mobile":"12345678910",
+                            <br> "cid":"421087000000000000",
+                            <br> "card":"622100000000",
+                            <br> "customerId":"201301011011290001"
+                            <br> }
+                            <br>
+                        </code>
+                    </p>
+                    <p>使用我司对外公钥进行 RSA 加密，生产加密字符串作为请求参数作为data字段。</p>
+                    <p>
+                        <code>
+                            RSA_ENCRYPT_BY_PUBLIC_KEY("{\"name\":\"张三\",\"mobile\":\"12345678910\",\"cid\":\"421087000000000000\",\"card\":\"622100000000\",\"customerId\":\"201301011011290001\"}")
+                        </code>
+                    </p>
+                    <p>
+                        加密后data：
+                    </p>
+                    <p>
+                        <code>
+                            oSlffhJki585URCTnFagvhN2SfItSuzFG60NjQTQzWfB3BDMXg0/qqAaTLi0GWwpwRZrfWc1CxYgbL3AzCNcyn/2iyQVeQK0eWa50S9rMqIOUrX7jHYm3vXjqqX2LQQtRF2V8+S7K7JR0MBEO708HGsVDChERLetKJ9pRL3EfftFfl9zEFLhttfFQjLzeK9RNq+8bnf2PqJGBp4hwk0iNA9VajsH4vrNINuLNUiaJWmhklQbCMnU4WutIl+ttNhthOhOnsIYbQyFxVVmURlQwv7HniOjPouyi6OvRpZ2lHlFRo6N0DFqL8Biz71edDrG35LTzyX9w2XhKWicydfT2g==
+                        </code>
+                    </p>
+                    <h4> 请求报文：</h4>
+                    <p class="code">
+                        <code>
+                            {
+                            <br> "account":"123456",
+                            <br> "data":"
+                            <br>oSlffhJki585URCTnFagvhN2SfItSuzFG60NjQTQzWfB3BDMXg0/qqAaTLi0GWwpwRZrfWc1CxYgbL3AzCNcyn/2iyQVeQK0eWa50S9rMqIOUrX7jHYm3vXjqqX2LQQtRF2V8+S7K7JR0MBEO708HGsVDChERLetKJ9pRL3EfftFfl9zEFLhttfFQjLzeK9RNq+8bnf2PqJGBp4hwk0iNA9VajsH4vrNINuLNUiaJWmhklQbCMnU4WutIl+ttNhthOhOnsIYbQyFxVVmURlQwv7HniOjPouyi6OvRpZ2lHlFRo6N0DFqL8Biz71edDrG35LTzyX9w2XhKWicydfT2g==",
+                            "sign":"EE4D39671D825BA272D4D2540D095EF7"
+                            <br> }
+                            <br>
+                        </code>
+                    </p>
+                    <p>说明：account 为我方分配给客户的账号。</p>
+                    <h3>1.3. 响应报文解密</h3>
+                    <p>返回报文：</p>
+                    <p class="code">
+                        <code>
+                            {
+                            <br> "encrypt":true,
+                            <br> "data": "V1YIvvzEBufvnY1wcuEr4GB0YCrPbFiqm0lvQeBV9pXZairLit1aZBxUCYoC+mZ0y64tgY2hRX66JzrRLyWCohKWDfuevNhZOVmJRq+3sDoomEdzAz2WBsK2qvu+YjW43SyYrF1dXozbZn7OMAWSZC8rRc38vS++b+n3GoDsnQdOZ9ebTb/JdYz+Sq7h1GyUIgDmiuhLAvcs6k6+wG6Qvt7mNByZpOse49tlsfLzhusgesU1Y+wz0oDyKcEZfqR4rxR1++3MgB/x1viarSlow1ci71QU4a/uqgw3x5L1QqgrehLnANHH3Fx3XZG9Va2LSxr9oDnoc/cEylAHzqNaeA==",
+                            <br> "sign":"6BD20DF100F66C3D375A072CBF0DBC68"
+                            <br> }
+                            <br>
+                        </code>
+                    </p>
+                    <p>解密业务数据</p>
+                    <p>使用客户私钥进行 RSA 解密 data字段，返回业务返回数据。</p>
+                    <p class="code">
+                        <code>
+                                RSA_DECRYPT_BY_PRIVATE_KEY("V1YIvvzEBufvnY1wcuEr4GB0YCrPbFiqm0lvQeBV9pXZairLit1aZBxUCYoC+mZ0y64tgY2hRX66JzrRLyWCohKWDfuevNhZOVmJRq+3sDoomEdzAz2WBsK2qvu+YjW43SyYrF1dXozbZn7OMAWSZC8rRc38vS++b+n3GoDsnQdOZ9ebTb/JdYz+Sq7h1GyUIgDmiuhLAvcs6k6+wG6Qvt7mNByZpOse49tlsfLzhusgesU1Y+wz0oDyKcEZfqR4rxR1++3MgB/x1viarSlow1ci71QU4a/uqgw3x5L1QqgrehLnANHH3Fx3XZG9Va2LSxr9oDnoc/cEylAHzqNaeA==")
+                        </code>
+                    </p>
+                    <p>解密后data：</p>
+                    <p class="code">
+                        <code>
+                                { <br>
+                                    "code":"200", <br>
+                                    "status":"2000", <br>
+                                    "message":"查询成功", <br>
+                                    "result":"****", <br>
+                                    "customerId":"201301011011290001", <br>
+                                    "gid":"40d7be07-f40e-4021-ae92-9f9ff7b58db7" <br>
+                                  } <br>
+                        </code>
+                    </p>
+                    <h2>2. 签名/验签机制</h2>
+                    <p>调用接口(API)时，服务器对请求参数进行签名验证，并对请求参数的格式进行正则验证，验证报文合法后才可以正常调用接口。</p>
+                    <h4>- 签名算法</h4>
+                    <p>签名采用 MD5算法。</p>
+                    <h4>- 生成待签名的字符串</h4>
+                    <p>把报文中待签名的参数名放入数组里，根据参数名从 a 到 z 的顺序排序，若遇到相同首字母，则看第二个字母，以此类推。排序完成之后，参数名与参数值连接起来，生成待签名字符串。</p>
+                    <p>例如：</p>
+                    <p>请求参数</p>
+                    <p class="code">
+                        <code>
+                                "account": "123456" <br>
+
+                                "data":"oSlffhJki585URCTnFagvhN2SfItSuzFG60NjQTQzWfB3BDMXg0/qqAaTLi0GWwpwRZrfWc1CxYgbL3AzCNcyn/2iyQVeQK0eWa50S9rMqIOUrX7jHYm3vXjqqX2LQQtRF2V8+S7K7JR0MBEO708HGsVDChERLetKJ9pRL3EfftFfl9zEFLhttfFQjLzeK9RNq+8bnf2PqJGBp4hwk0iNA9VajsH4vrNINuLNUiaJWmhklQbCMnU4WutIl+ttNhthOhOnsIYbQyFxVVmURlQwv7HniOjPouyi6OvRpZ2lHlFRo6N0DFqL8Biz71edDrG35LTzyX9w2XhKWicydfT2g=="<br>
+                        </code>
+                    </p>
+                    <p>连接后待签名字符串</p>
+                    <p class="code">
+                        <code>account123456dataoSlffhJki585URCTnFagvhN2SfItSuzFG60NjQTQzWfB3BDMXg0/qqAaTLi0GWwpwRZrfWc1CxYgbL3AzCNcyn/2iyQVeQK0eWa50S9rMqIOUrX7jHYm3vXjqqX2LQQtRF2V8+S7K7JR0MBEO708HGsVDChERLetKJ9pRL3EfftFfl9zEFLhttfFQjLzeK9RNq+8bnf2PqJGBp4hwk0iNA9VajsH4vrNINuLNUiaJWmhklQbCMnU4WutIl+ttNhthOhOnsIYbQyFxVVmURlQwv7HniOjPouyi6OvRpZ2lHlFRo6N0DFqL8Biz71edDrG35LTzyX9w2XhKWicydfT2g==
+                        </code>
+                    </p>
+                    <h4>- MD5运算后的签名结果</h4>
+                    <p class="code">
+                        <code>EE4D39671D825BA272D4D2540D095EF7
+                        </code>
+                    </p>
+                    <h4>- 响应报文验签</h4>
+                    <p>    用户得到响应结果时，仍按照上文方法生成待签名字符串，然后对其做MD5加签，加签结果与响应中的sign做比较，如果两者相同则验签通过，否则验签失败。</p>
+                    <strong>
+                            * 注意：<br>
+                            * 1：签名时字符均采用UTF-8编码；<br>
+                            * 2：接口请求采用HTTPS POST方式提交数据，参数无需做URLEncoding转码； <br>
+                    </strong>
+                    <h2>3. 异常响应</h2>
+                    <p class="code">
+                        <code>
+                                {<br>
+                                    "code":"400",<br>
+                                    "status":"9804",<br>
+                                    "customerId":"150165535561065",<br>
+                                    "gid":"2734ec87-339a-492a-8864-a375c36ba186",<br>
+                                    "message":"参数为空或格式错误"<br>
+                                 }<br>
+                        </code>
+                    </p>
+                    <p>完整的异常响应码、状态码和错误提示信息，请参考附录</p>
+                </div>
+                <div class="item">
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>响应码</th>
+                                <th>状态码</th>
+                                <th>状态信息</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>400</td>
+                                <td>9800</td>
+                                <td>账户不存在或被禁用</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9801</td>
+                                <td>访问资源不存在</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9802</td>
+                                <td>请求IP没有访问权限</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9803</td>
+                                <td>没有此产品访问权限</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9804</td>
+                                <td>参数为空或格式错误</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9805</td>
+                                <td>该帐号余额不足</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9806</td>
+                                <td>此接口请求次数达到上限</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9807</td>
+                                <td>报文解析错误</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9808</td>
+                                <td>验签失败</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9809</td>
+                                <td>查询时间区间不正确</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9810</td>
+                                <td>访问产品不存在</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9811</td>
+                                <td>标签没有权限访问</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9812</td>
+                                <td>密钥未配置或过期</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>9813</td>
+                                <td>产品后台配置异常</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>9900</td>
+                                <td>系统异常</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>9901</td>
+                                <td>服务异常</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>9902</td>
+                                <td>渠道异常</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>9903</td>
+                                <td>请求超时</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+    </div>
+</section>
+
+{% endblock %}
