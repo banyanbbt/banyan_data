@@ -1,0 +1,181 @@
+{% extends 'layouts/default.html' %} {% load custom_filters %}
+{% block title %}任务详情-{% endblock title %}
+{% block content %}
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation" style="background: #3b3faa;">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li class="active">
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li>
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/" id="top-desk">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="tasks-detail-1-wrapper" class="padding-top-80  main-section">
+    <div id="tasks-detail-1" class="container">
+        <h3 class="title">
+            <a href="/tasks/">任务列表</a>  /
+            <span>任务详情</span>
+        </h3>
+        <hr>
+        <div class="content">
+            <div class="media">
+                <div class="left col-sm-4" href="#">
+                    <img src="/media/{{ task.img }}" alt="" height="240">
+                </div>
+                <div class="right col-sm-8">
+                    <div class="title">
+                        <h3> {{ task.name }}</h3>
+                        <div class="operation">
+                        {% if user and  user.user_type == 'company' %}
+                        <button class="btn btn-primary btn-disable">企业用户无法领取</button>
+                        {% else %}
+                            {% if task.start_time < now_time and task.end_time > now_time %}
+                                {% if request.session.user_id %}
+                                            {% if task.id in user_task_ids %}
+                                                <a class="btn btn-primary" href="/task/">去做任务</a>
+                                            {% else %}
+                                                <a class="btn btn-primary btn-vow detail-add-to-desk" onclick="receiveTask('{{ task.id }}')">立即领取</a>
+                                            {% endif %}
+                                        {% else %}
+                                        <a class="btn btn-primary" href="/auth/">立即领取</a>
+                                        {% endif %}
+                            {% else %}
+                                <a class="btn btn-primary">即将开始</a>
+                            {% endif %}
+                        {% endif %}
+                        </div>
+                    </div>
+                    <ul>
+                        <li><span>任务ID:</span> {{ task.id }}</li>
+                        <li><span>开始时间：</span>{{ task.start_time }}</li>
+                        <li><span>截止时间：</span>{{ task.end_time }}</li>
+                    </ul>
+                    <ul>
+                        <li><span>数据单价（BBN）:</span> {{ task.question_price }}</li>
+                        <li><span>数据总量（条）：</span>{{ task.id | question_count }}</li>
+                        <li><span>已领取人数：</span>{{ task | get_received_count }}</li>
+                    </ul>
+                    {% if attach %}
+                    <div class="file">
+                        <span>文件：</span>
+                        <span class="file-name">{{ attach.file_name }}</span>
+                        <a href="/media/{{ attach.file_obj.name }}" target="_blank" class="btn btn-default">下载</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="introduction">
+                <div class="index">
+                    <span class="active">任务描述</span>
+                    <span>数据样例</span>
+                </div>
+                <div class="explain">
+                    <div class="item item-show">
+                        {{ task.description|safe }}
+                    </div>
+                    <div class="item">
+                    <div class="example-test">
+                    {% if answer_option %}
+                    <div class="inner">
+                        <p class="title" style="font-size: 28px;">{% for option in answer_option %}{% if option.name == 'example' %}{{ option.example }}{% endif %}{% endfor %}</p>
+                        <form class="car-form">
+                            {% if answer_option %}
+                                <div class="left col-sm-5">
+                                    {% for option in answer_option %}
+                                        {% if forloop.counter <= 5 and option.name != 'example' %}
+                                        <div class="form-group">
+                                        <label for="brand" class="control-label" style="word-break:keep-all;">{{ option.name | en_to_cn }}：</label>
+                                        <div class="input-wrapper">
+                                            <input type="text" class="form-control" name="brand" id="brand" disabled="disabled" placeholder="{{ option.example }}">
+                                        </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="left col-sm-2"></div>
+                                <div class="left col-sm-5">
+                                    {% for option in answer_option %}
+                                        {% if forloop.counter >= 6 and option.name != 'example' %}
+                                        <div class="form-group">
+                                        <label for="brand" class="control-label" style="word-break:keep-all;">{{ option.name | en_to_cn }}：</label>
+                                        <div class="input-wrapper">
+                                            <input type="text" class="form-control" name="brand" id="brand" disabled="disabled" placeholder="{{ option.example }}">
+                                        </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                    {% else %}
+                    <p>该任务暂无样例</p>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

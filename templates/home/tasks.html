@@ -1,0 +1,147 @@
+{% extends 'layouts/default.html' %} {% load custom_filters %}
+{% block title %}领取任务-{% endblock title %}
+{% block content %}
+
+<nav class="one-page-header one-page-header-style-2 navbar navbar-fixed-top" role="navigation">
+    <div class="">
+        <div class="menu-container page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand banyan-logo" href="/">
+                <img src="/static/newimg/logo.png" alt="" width="100" height="40" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="menu-container">
+                <ul class="log-reg-block visible-md-block visible-lg-block">
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li class="active">
+                        <a href="/tasks/">领取任务</a>
+                    </li>
+                    <li>
+                        <a href="/cooperation/">数据合作</a>
+                    </li>
+                    <li>
+                        <a href="http://banyanbbt.org/cn_index.html" target="_blank">榕树官网</a>
+                    </li>
+                    <li>
+                        <a href="/task/" id="top-desk">控制台</a>
+                    </li>
+                    {% if request.session.user_id %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/logout/">退出</a>
+                    </li>
+                    {% else %}
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signin" href="/auth/">登录</a>
+                    </li>
+                    <li class="cd-log_reg visible-xs-block visible-sm-block">
+                        <a class="cd-signup" href="/auth/?action=1/">加入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="tasks-wrapper" class="main-section">
+    <div id="tasks" class="">
+        <div class="task-banner">
+            <div class="container" aos="fade-up" aos-easing="ease" aos-delay="200">
+                <h2>做任务，即挖矿！</h2>
+            </div>
+        </div>
+        <h3 class="title title-hr">任务列表</h3>
+        <hr>
+        <div class="row container">
+            <div class="search_box">
+                <h2>当前热门 <img src="/static/newimg/tasks/hot2.png" alt="" height="28px"> </h2>
+                <hr>
+                <div class="select_btn">
+                    <button class="btn btn-default selected" name="all">全部</button>
+                    <button class="btn btn-default" name="文本">文本</button>
+                    <button class="btn btn-default" name="音频">语音</button>
+                    <button class="btn btn-default" name="图片">图片</button>
+                    <button class="btn btn-default" name="视频">视频</button>
+                </div>
+            </div>
+            {% for task in tasks %}
+            <div class="col-sm-6 col-md-4 col-lg-4 each-wrapper all {{ task.type }}">
+                <div class="thumbnail">
+                    <div class="image">
+                        <img src="/media/{{ task.img }}" alt="">
+                    </div>
+
+                    <div class="caption">
+                        <div class="title">
+                            <h4><a href="/tasks/{{ task.id }}/">{{ task.name }}</a></h4>
+                        {% if user and user.user_type != 'company' %}
+                            {% if task.start_time < now_time and task.end_time > now_time%}
+                                {% if request.session.user_id %}
+                                    {% if task.id in user_task_ids %}
+                                        <button class="btn btn-primary btn-disable">已领取</button>
+                                    {% else %}
+                                        <button class="btn btn-primary add-to-desk" onclick="receiveTask('{{ task.id }}')">立即领取</button>
+                                    {% endif %}
+                                {% else %}
+                                    <a class="btn btn-primary" href="/auth/">立即领取</a>
+                                {% endif %}
+                            {% else %}
+                                <button class="btn btn-default" disabled>即将开始</button>
+                            {% endif %}
+                        {% endif %}
+                        </div>
+                        <div class="info">
+                            <span>奖励 <i>{{ task.question_price }}</i> BBN</span>
+                            <span>已领 <i>{{ task | get_received_count }}</i> 人</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</section>
+{% endblock %}
+{% block bottom_javascript %}
+    <script>
+        $('.select_btn').on('click', 'button', function() {
+            let name = $(this).attr('name');
+            let btn = $('.select_btn button');
+            let eachWrapper = $('.each-wrapper');
+            eachWrapper.map((i, item) => {
+                $(item).slideUp(0);
+                $(item).hasClass(name) ? $(item).slideDown(400) : '';
+            });
+
+            btn.removeClass('selected');
+            $(this).addClass('selected');
+        })
+
+    </script>
+{% endblock %}
